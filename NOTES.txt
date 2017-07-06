@@ -1,0 +1,36 @@
+web3: basic ether lib
+
+private keys:   
+    * any 64 char string is private key except some (all 0 is not)
+    * case-insensitive
+    
+wallet adress:
+    * 40 chars 
+    * generated from private key
+    * created deterministicly
+    * you can search any wallet from https://etherscan.io/address/0x571bc3a874000a3bc27b352a665a50fdaabc5abe
+    
+gas price?
+    * every action/command/transaction etc is charged
+    * all opcodes https://ethereum.stackexchange.com/questions/119/what-opcodes-are-available-for-the-ethereum-evm
+    * gas prices of these opcodes https://docs.google.com/spreadsheets/d/1m89CVujrQe5LAFJ8-YAUCcNK950dUzMQPMJBxRtGCqs/
+    * gas limit? a transaction can not pass "GAS LIMIT 6690808 gas"
+    
+units:
+    * ether/kether
+    * http://forum.ethereum.org/discussion/1518/ether-unit-converter-wei-finney-szabo-btc
+
+
+using mainnet
+    * https://mainnet.infura.io/IYes2tXQrmopCDJgJvZa
+    
+    
+ truffle (after 07_piyango)
+    truffle init
+    truffle compile
+    truffle migrate
+    truffle test
+
+events:
+    * http://solidity.readthedocs.io/en/develop/contracts.html#events
+    
