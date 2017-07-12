@@ -43,10 +43,7 @@ var deployedDispatch = dispatch.contract.new(dispatch.data, function (err, dispa
     console.log('lookupContract address: ' + lookupContract.address)
 
     deployedLookup.setQueryAddress(dispatchContract.address, { from: web3.eth.accounts[0] }, function (err, resp) {
-      if (err) {
-        console.log('setQueryAddress err:', err);
-        return
-      }
+      if (err) { throw new Error('setQueryAddress err:', err); }
 
       deployedLookup.getQueryAddress({ from: web3.eth.accounts[0] }, function (err, resp) {
         if (err) { throw new Error('getQueryAddress err:', err); }
