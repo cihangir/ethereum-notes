@@ -1,23 +1,15 @@
 pragma solidity ^ 0.4.0;
 
 //
-// This is where the magic happens
-//
-// This contract will receive the actual query from the caller
-// contract. Assign a unique (well, sort of) identifier to each
-// incoming request, and emit an event our RPC client is listening
-// for.
-//
-//
 // The lookup contract for storing both the query and responder addresses
 //
 
-contract TestOracleLookup {
+contract TiteOracleLookup {
   address owner;
   address query;
   address response;
 
-  function TestOracleLookup() {
+  function TiteOracleLookup() {
     owner = msg.sender;
   }
 

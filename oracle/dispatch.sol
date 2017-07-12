@@ -8,18 +8,18 @@
 //
 pragma solidity ^ 0.4.0;
 
-contract TestOracleDispatch {
+contract TiteOracleDispatch {
   address owner;
 
-  event Incoming(uint256 id, address recipient, bytes query);
+  event Incoming(uint256 id, address recipient, string query);
 
   // constructor
-  function TestOracleDispatch() {
+  function TiteOracleDispatch() {
     owner = msg.sender;
   }
 
   // provided oracle function
-  function query(bytes _query) external returns (uint256 id) {
+  function querySend(string _query) external returns (uint256 id) {
     id = uint256(sha3(block.number, now, _query, msg.sender));
     Incoming(id, msg.sender, _query);
   }

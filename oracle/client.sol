@@ -4,27 +4,27 @@ pragma solidity ^ 0.4.0;
 // This is the API file to be included by a user of this oracle
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-contract TestOracle {
-  function query(bytes _query) returns (uint256 id);
+contract TiteOracle {
+  function querySend(string _query) returns (uint256 id);
 }
 
-contract TestOracleLookup {
+contract TiteOracleLookup {
   function getQueryAddress() constant returns (address);
   function getResponseAddress() constant returns (address);
 }
 
-contract usingTestOracle {
+contract usingTiteOracle {
   address constant lookupContract = 0x0;
 
-  function queryTestOracle(bytes query) internal returns (uint256 id) {
-    TestOracleLookup lookup = TestOracleLookup(lookupContract);
-    TestOracle testOracle = TestOracle(lookup.getQueryAddress());
-    return testOracle.query(query);
+  function queryTiteOracle(string query) internal returns (uint256 id) {
+    TiteOracleLookup lookup = TiteOracleLookup(lookupContract);
+    TiteOracle titeOracle = TiteOracle(lookup.getQueryAddress());
+    return titeOracle.querySend(query);
   }
 
-  modifier onlyFromTestOracle {
-    TestOracleLookup lookup = TestOracleLookup(lookupContract);
-    require (msg.sender == lookup.getResponseAddress());
+  modifier onlyFromTiteOracle {
+    TiteOracleLookup lookup = TiteOracleLookup(lookupContract);
+    require(msg.sender == lookup.getResponseAddress());
     _;
   }
 }
@@ -34,19 +34,14 @@ contract usingTestOracle {
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-contract SampleClient is usingTestOracle {
-  bytes public response;
+contract SampleClient is usingTiteOracle {
+  string public response;
 
-  function __testOracleCallback(uint256 id, bytes _response) onlyFromTestOracle external {
+  function __titeOracleCallback(uint256 id, string _response) onlyFromTiteOracle external {
     response = _response;
   }
 
-  function query() {
-    string memory tmp = "hello world";
-    query(bytes(tmp));
-  }
-
-  function query(bytes query) {
-    queryTestOracle(query);
+  function querySend(string q) {
+    queryTiteOracle(q);
   }
 }
