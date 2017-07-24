@@ -5,7 +5,7 @@ pragma solidity ^ 0.4.0;
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 contract TiteOracle {
-  function querySend(string _query) returns (uint256 id);
+  function query(string param0) returns (uint256 id);
 }
 
 contract TiteOracleLookup {
@@ -14,34 +14,37 @@ contract TiteOracleLookup {
 }
 
 contract usingTiteOracle {
-  address constant lookupContract = 0x0;
+  // address constant lookupContract = 0x747075562918A0Fc5A83eE121160E7a7157994fb;
+  // just to bypass err while compiling, do not use address as constant
+  // err message: Initial value for constant variable has to be compile-time constant. This will fail to compile ...
 
-  function queryTiteOracle(string query) internal returns (uint256 id) {
-    TiteOracleLookup lookup = TiteOracleLookup(lookupContract);
-    TiteOracle titeOracle = TiteOracle(lookup.getQueryAddress());
-    return titeOracle.querySend(query);
+  function queryTiteOracle(string param0) internal returns (uint256 id) {
+    TiteOracleLookup lookup = TiteOracleLookup(0x747075562918A0Fc5A83eE121160E7a7157994fb);
+    TiteOracle oracle = TiteOracle(lookup.getQueryAddress());
+    return oracle.query(param0);
   }
 
   modifier onlyFromTiteOracle {
-    TiteOracleLookup lookup = TiteOracleLookup(lookupContract);
+    TiteOracleLookup lookup = TiteOracleLookup(0x747075562918A0Fc5A83eE121160E7a7157994fb);
     require(msg.sender == lookup.getResponseAddress());
     _;
   }
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 contract SampleClient is usingTiteOracle {
+  uint256 public id;
   string public response;
 
-  function __titeOracleCallback(uint256 id, string _response) onlyFromTiteOracle external {
-    response = _response;
+  function __callback(uint256 _id, string param0) onlyFromTiteOracle external {
+    id = _id;
+    response = param0;
   }
 
-  function querySend(string q) {
-    queryTiteOracle(q);
+  function query(string param0) {
+    queryTiteOracle(param0);
   }
 }

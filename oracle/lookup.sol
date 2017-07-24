@@ -29,7 +29,7 @@ contract TiteOracleLookup {
     response = addr;
   }
 
-  modifier owneronly { 
+  modifier owneronly {
     require(msg.sender == owner);
     _;
   }
